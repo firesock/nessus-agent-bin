@@ -1,0 +1,22 @@
+pre_install() {
+	systemctl stop nessusagent
+}
+
+post_install() {
+	systemctl daemon-reload
+	systemctl enable --system --quiet --now nessusagent.service
+	echo "Use '/opt/nessus_agent/sbin/nessuscli agent link ' for linking with your site settings"
+}
+
+pre_upgrade() {
+	systemctl stop nessusagent
+}
+
+post_upgrade() {
+	systemctl daemon-reload
+	systemctl enable --system --quiet --now nessusagent.service
+}
+
+pre_remove() {
+	systemctl disable --system --quiet --now nessusagent
+}
